@@ -101,4 +101,37 @@ git config --global --add safe.directory /usr/data/moonraker/moonraker
 ## Original Helper Script Wiki by Guilouz:  
 [Wiki](https://guilouz.github.io/Creality-Helper-Script-Wiki/)
 
+--- 
+You have an error in START_PRINT "gcoce_macro → gcode_macro"
+ [gcoсe_macro ADAPT_PURGE_MOD]
+gcode:
+
+    {% if printer['output_pin ADAPTIVE_PURGE_LINE'].value == 1 %}
+    _SMART_PARK
+    RESPOND TYPE=command MSG="Starting Adaptive Purge Line..."
+    _LINE_PURGE
+    {% else %}  
+    RESPOND TYPE=command MSG="Starting Classic Purge Line..."
+    CX_PRINT_DRAW_ONE_LINE
+  {% endif %}
+ SET_VELOCITY_LIMIT ACCEL={printer.configfile.settings.printer.max_accel}
+
+
+But it should be:
+ [gcode_macro ADAPT_PURGE_MOD]
+gcode:
+
+    {% if printer['output_pin ADAPTIVE_PURGE_LINE'].value == 1 %}
+    _SMART_PARK
+    RESPOND TYPE=command MSG="Starting Adaptive Purge Line..."
+    _LINE_PURGE
+    {% else %}  
+    RESPOND TYPE=command MSG="Starting Classic Purge Line..."
+    CX_PRINT_DRAW_ONE_LINE
+  {% endif %}
+ SET_VELOCITY_LIMIT ACCEL={printer.configfile.settings.printer.max_accel}
+
+
+
+
 <br />
